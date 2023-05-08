@@ -18,7 +18,7 @@
 
 class Database {
     
-    static $dsn = '"sqlsrv:server = tcp:lmcm-pai.database.windows.net,1433; Database = lmcm-pai-db"';
+    static $dsn = 'sqlsrv:server = tcp:lmcm-pai.database.windows.net,1433; Database = lmcm-pai-db';
     static $username = 'CloudSA695e5a66';
     static $password = 'QS8mPs.*.m._w>m';
 
