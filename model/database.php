@@ -18,9 +18,9 @@
 
 class Database {
     
-    static $dsn = 'mysql:host=localhost;dbname=lmcm_pai_test2';
-    static $username = 'pmo';
-    static $password = 'pass';
+    static $dsn = '"sqlsrv:server = tcp:lmcm-pai.database.windows.net,1433; Database = lmcm-pai-db"';
+    static $username = 'CloudSA695e5a66';
+    static $password = 'QS8mPs.*.m._w>m';
 
     public static function connection() {
         
