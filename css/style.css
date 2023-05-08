@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-family: 'Lato', sans-serif;
+    padding: 0.4rem;
+}
+
+.background { 
+    background: url(../image/background.png) no-repeat bottom center fixed;
+    margin: 0;
+}
+
+/*login*/
+body {
+    margin: auto;
+}
+
+header {
+    color: #737373;
+    margin-top: 1rem;
+    text-align: center;
+
+    /*login*/
+    padding-top: 2rem;
+}
+
+header img {
+    width: 80%;
+    /* was 150px*/
+    /*max-width: 150px;*/
+    max-width: 110px;
+    height: auto;
+    text-align: center;
+}
+
+/*login*/
+header h3 {
+    background-color: rgba(255,163,47,.7);
+    color: #fff;
+    border-radius: 10px;
+    max-width: 275px;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+/*login*/
+header p {
+    max-width: 350px;
+    margin: auto;
+    padding: 0.25rem;
+}
+
+/*login*/
+.wrapper {
+    height: auto;
+}
+
+/*login*/
+.sign {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/*login*/
+#loginWin {
+    background-color: rgba(255,163,47,.7);
+    color: #fff;
+    border-radius: 20px;
+    max-width: 400px;
+    margin: 20px;
+    padding: 50px;
+ }
+ 
+label, input { 
+    display: block;
+}
+
+/*login*/
+label {
+    font-size: .9rem;
+    color: #fff;
+    text-align: left;
+}
+
+/*login*/
+input {
+    border-radius: 6px;
+    padding: 6px;
+    border: solid 1px #9B9B9B;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+/*login*/
+.Btn {
+    border-radius: 15px;
+    padding: .5rem 1rem;
+    margin-top: 2px;
+    min-width: 125px;
+    color: #fff;
+    cursor: pointer;
+    font-size: .9rem;
+    background-color: #737373;
+    border: none;
+    margin-bottom: 25px;
+}
+
+input:focus, select:focus {
+    outline: solid 2px #939393;
+    box-shadow: 0 0 3px #939393;
+}
+
+/*login*/
+.login_message {
+    margin: 0 auto;
+    text-align: center;
+}
+
+/*login*/
+.login_message p {
+    color: #f00;
+}
+
+@media (min-width: 550px) {
+    
+    header p {
+        max-width: 500px;
+    }
+    
+}

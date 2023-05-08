@@ -1,0 +1,340 @@
+/* --- CSS MAIN START --- */
+
+/* --- Setting up page defaults --- */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
+    padding: 0.4rem;
+}
+
+.background { 
+    background: url(../image/background.png) no-repeat bottom center fixed;
+    margin: 0;
+}
+
+header {
+    color: #737373;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+header img {
+    width: 80%;
+    /*was 192px*/
+    /*max-width: 192px;*/
+    max-width: 150px;
+    height: auto;
+    text-align: center;
+}
+
+main img, .admin_icon button {
+    width: 80%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 0.5em;
+}
+
+/*
+    |------------------------------------------|
+    |-------------- SMALL SCREEN --------------|
+    |------------------------------------------|
+*/
+
+h1 {
+    font-size: 1.1em;
+    margin-bottom: 0.2em;
+}
+
+h2 {
+    font-size: 0.8em;
+    margin-bottom: 0.1em;
+}
+
+h3 {
+    color: red;
+    font-size: 0.7em;
+    max-width: 400px;
+    margin:auto;
+    margin-bottom: 0.2em;
+    text-align: center;
+}
+
+#head h3 {
+    color:#737373;
+}
+
+label {
+    display: block;
+    color: #737373;
+    font-size: 0.7rem;
+    width: 100%;
+    margin-bottom: 0.1rem;
+}
+
+input {
+    display: block;
+    color: black;
+    background-color: white;
+    font-size: 0.7rem;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+input, select {
+    padding: 0.1rem;
+    /*font-size: 1.5rem;*/
+    font-size: 0.6rem;
+    /*height: 2.1rem;*/
+    width: 100%;
+}
+
+select {
+    margin-bottom: 0.7rem;
+}
+
+form {
+    background-color: rgba(255,163,47,.7);
+    color: #fff;
+    border-radius: 20px;
+    height: 100%;
+    margin: auto;
+    padding: 0.5rem;
+}
+
+#match_msg {
+    color: red;
+    font-size: 0.6rem;
+}
+
+button {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    padding: 0.1rem;
+    width: 100%;
+    border-radius: 0.25em;
+    opacity: 1;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.8);
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Password matching message start out hidden */
+#match_msg {
+    display: none;
+}
+
+.icon_box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.admin_icon {
+    background-color: rgba(255,163,47,.7);
+    height: auto;
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 0.8rem;
+    opacity: 1;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.admin_icon:hover {
+    opacity: 0.8;
+}
+
+.result_box, .searchForm {
+    background: rgba(255,163,47,.7);
+    border-radius: 20px;
+    padding: 0.5rem;
+    margin: 5px auto;
+}
+.result_box h2 {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.result_table {
+    width: 100%;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    table-layout: auto;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(255,163,47,.7);
+}
+
+th {
+    text-align: left;
+}
+
+.busName {
+    display: none;
+}
+
+td, th {
+    /*border: 1px solid #666;*/
+    padding: 0.1rem;
+}
+
+.select_button {
+    background-color: transparent;
+    text-align: center;
+    padding: 0.2rem;
+    word-break: normal;
+}
+
+.select_button button {
+    margin: 0;
+    font-size: 0px;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+
+.select_button img {
+    min-width: 20px;
+    max-width: 40px;
+    height: auto;
+    border-radius: 0em;
+}
+
+th, td, .searchForm button, .modUser button {
+    font-size: 0.6rem;
+}
+
+#admin_logout {
+    max-width: 520px;
+    margin: auto;
+}
+
+/*
+    |------------------------------------------|
+    |-------------- LARGE SCREEN --------------|
+    |------------------------------------------|
+*/
+
+@media (min-width: 550px) {
+
+    .modUser h1 {
+        font-size: 1.5em;
+        margin-bottom: 0.3em;
+    }
+    
+    .modUser h2 {
+        font-size: 1em;
+        margin-bottom: 0.2em;
+    }
+
+    .result_box h2 {
+        font-size: 1rem;
+    }
+
+    th {
+        font-size: 0.9rem;
+    }
+    
+    td {
+        font-size: 0.8rem;
+    }
+    
+    .select_button {
+        padding: 0.2rem;
+    }
+    
+    .select_button button {
+        font-size: 0.8rem;
+    }
+
+    .select_button img {
+        display: none;
+    }
+
+    .searchForm button, .modUser button {
+        font-size: 1rem;
+    }
+
+}
+
+@media (min-width: 630px) {
+    
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 0.3em;
+    }
+    
+    h2 {
+        font-size: 1em;
+        margin-bottom: 0.2em;
+    }
+
+    .searchForm , .result_box, .result_table {
+        max-width: 920px;
+    }
+
+    #admin_box {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    h3 {
+        font-size: 0.8em;
+        max-width: 555px;
+        margin:auto;
+        margin-bottom: 0.2em;
+        text-align: center;
+    }
+
+    .busName {
+        display: revert;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+    
+    .select_button button {
+        padding: 0.2rem;
+    }
+
+    form {
+        max-width: 920px;
+        margin: auto;
+    }
+
+    .input_container {
+        width: 50%;
+        float: left;
+        font-size: 0.7em;
+        box-sizing: border-box;
+        padding: 0.4em;
+        margin-bottom: 0.5em;
+    }
+
+    input, select {
+        width: 100%;
+        /*height: 1.2rem;*/
+        font-size: 1em;
+    }
+    
+    #match_msg {
+        color: red;
+        font-size: 0.6rem;
+        margin-top: 0.5rem;
+    } 
+}
