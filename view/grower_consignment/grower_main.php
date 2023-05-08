@@ -4,6 +4,8 @@
     <h1>Welcome <?php echo htmlspecialchars($user->getFirstName()); ?></h1>
     <h2>Grower Management</h2>
 </header>
+<?php echo $user->getUserType() ?>
+
 
 <main>
     <div id="admin_box">
