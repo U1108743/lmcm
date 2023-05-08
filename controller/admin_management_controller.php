@@ -2,8 +2,11 @@
 require_once('../library/config.php');
 require_once('../model/database.php');
 require_once('../model/user_db.php');
+require_once('../model/report_db.php');
+require_once('../model/report_access_db.php');
 require_once('../library/session.php');
 require_once('../library/user.php');
+require_once('../library/report.php');
 
 // create session
 $user_session = new UserSession();
@@ -119,11 +122,44 @@ switch ($action) {
         include('../view/admin_manager/modify_user_select.php');
         break;
 
+    case 'manage_reports_select':
 
-    case 'get_user_reports':
+        $reports = ReportModel::get_reports();
 
-        // redirect to get user reports
-        include('../view/admin_manager/get_user_reports.php');
+        //unset admin user password fail message
+        if (isset($_SESSION['admin_fail_msg'])) {
+            unset($_SESSION['admin_fail_msg']);
+        }
+
+        // redirect to manage access selection form
+        include('../view/admin_manager/manage_reports_select.php');
+        break;
+
+    case 'manage_access_select':
+
+        $report_id = filter_input(INPUT_POST, 'report_id');
+        $users_with_access = UserModel::get_user_data_by_access($report_id);
+        $report = ReportModel::get_report_by_number($report_id);
+
+        //unset admin user password fail message
+        if (isset($_SESSION['admin_fail_msg'])) {
+            unset($_SESSION['admin_fail_msg']);
+        }
+
+        // redirect to manage access selection form
+        include('../view/admin_manager/manage_access_select.php');
+
+        break;
+
+    case 'view_report':
+        $report_id = filter_input(INPUT_POST, 'report_id');
+        $pdf = ReportModel::get_report_data($report_id);
+        header('Content-type: application/pdf');
+        header("Cache-Control: no-cache");
+        header("Pragma: no-cache");
+        header("Content-length: " . strlen($pdf[0]));
+        die($pdf[0]);
+
         break;
 
     case 'modify_user':
@@ -160,6 +196,21 @@ switch ($action) {
             $users = UserModel::get_users_by_number_starts_with($search_input);
         }
         include('../view/admin_manager/modify_user_select.php');
+        break;
+
+    case 'search_report':
+        // searches report_data and returns list of reports to be presented
+
+        $search_input = filter_input(INPUT_POST, 'search_input');
+
+        $reports = array();
+        if ($search_input == "") {
+            $reports = array();
+        }
+
+        $reports = ReportModel::get_reports_by_filename_contains($search_input);
+
+        include('../view/admin_manager/manage_reports_select.php');
         break;
 
     case 'update_user':
@@ -240,6 +291,56 @@ switch ($action) {
 
         break;
 
+
+    case 'user_access_selection':
+        // update access list in system
+
+        // Get report_id
+        $report_id = filter_input(INPUT_POST, 'report_id');
+
+        // get list of users to change access for and their new access state
+        $grower_id_list = filter_input(INPUT_POST, 'grower_id_list', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $grower_ids = filter_input(INPUT_POST, 'grower_ids', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+
+        //admin credentials
+        $admin_entry_pw = filter_input(INPUT_POST, 'admin_password');
+        $admin_id = $user->getUserID();
+        $admin_session_pw = UserModel::get_user_password_hash($admin_id);
+
+        if (password_verify($admin_entry_pw, $admin_session_pw[0])) {
+            // clear the admin_fail_msg
+            if (isset($_SESSION['admin_fail_msg'])) {
+                unset($_SESSION['admin_fail_msg']);
+            }
+
+            // try adding user accesses to the system via data model
+            try {
+                ReportAccessModel::update_access($report_id, $grower_ids, $grower_id_list);
+            } catch (Exception $e) {
+                // get report and users with access to display
+                $report = ReportModel::get_report_by_number($report_id);
+                $users_with_access = UserModel::get_user_data_by_access($report_id);
+
+                // produce error message
+                $error = "The following error occured when attempting to change access: " . $e;
+                include('../view/admin_manager/manage_access_select.php');
+                die();
+            }
+
+            // create report access list change message and redirect
+            $_SESSION['message_type'] = 'update_access';
+            $_SESSION['change_access_msg'] = "<h3>" . "Changed Access for Individuals</h3>";
+            header('Location: ?action=access_changed');
+        } else {
+            // password failed to verify get report and users with access to display
+            $report = ReportModel::get_report_by_number($report_id);
+            $users_with_access = UserModel::get_user_data_by_access($report_id);
+            $_SESSION['admin_fail_msg'] = "<h3>" . "Admin authentication failed when attempting update" . "</h3>";
+            include('../view/admin_manager/manage_access_select.php');
+        }
+
+        break;
+
     case 'user_pw_form':
 
         $user_id = filter_input(INPUT_POST, 'user_id');
@@ -296,6 +397,14 @@ switch ($action) {
 
         // redirected user submission so that user refresh does not resubmit add user form
         include('../view/admin_manager/admin_message.php');
+        break;
+
+    case 'access_changed':
+
+        // redirected reports access list so that user refresh does not resubmit change access form
+        // Supply reports for page
+        $reports = ReportModel::get_reports();
+        include('../view/admin_manager/manage_reports_select.php');
         break;
 
     case 'no_session':

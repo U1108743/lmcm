@@ -46,6 +46,21 @@ function editUser() {
     $("#update_user").css("color", "white");
 }
 
+
+//Allow report access list to be edited on admin user access list form
+function editAccess() {
+    $(".input_container :input").prop("disabled", false);
+
+    //Hide edit access and show cancel changes button
+    $("#edit_access").hide();
+    $("#cancel_changes").show();
+
+    //colour cancel changes, update user buttons
+    $("#cancel_changes").css("background-color", "red");
+    $("#update_access").css("background-color", "green");
+    $("#update_access").css("color", "white");
+}
+
 function resetPassword() {
 
     //Hide edit user button and show cancel changes button

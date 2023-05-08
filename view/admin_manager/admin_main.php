@@ -10,31 +10,31 @@
         <div class="icon_box">
             <div class="admin_icon">
                 <a href="?action=add_user_form">
-                    <img src="../image/addUser1.png"></a>
+                <img src="../image/addUser1.png"></a>
                 <br>
                 <button onclick="window.location.href='?action=add_user_form';">
-                    Add User
+                Add User
                 </button>
             </div>
 
             <div class="admin_icon">
                 <a href="?action=modify_user_form">
-                    <img src="../image/editUser.png"></a>
+                <img src="../image/editUser.png"></a>
                 <br>
                 <button onclick="window.location.href='?action=modify_user_form';">
-                    Modify User
+                Modify User
                 </button>
             </div>
-
+            
             <div class="admin_icon">
-                <a href="?action=get_user_reports">
-                    <img src="../image/reportControl.png"></a>
+                <a href="?action=manage_reports_select">
+                <img src="../image/editUser.png"></a>
                 <br>
-                <button onclick="window.location.href='?action=get_user_reports';">
-                    User Report
+                <button onclick="window.location.href='?action=manage_reports_select';">
+                Manage Reports
                 </button>
             </div>
-
+            
         </div>
 
         <div id="admin_logout">
@@ -42,7 +42,7 @@
                 Logout
             </button>
         </div>
-        <div>
+    <div>
 
 </main>
 

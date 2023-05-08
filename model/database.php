@@ -18,7 +18,7 @@
 
 class Database {
     
-    static $dsn = 'mysql:host=localhost;dbname=lmcm_pai_test';
+    static $dsn = 'mysql:host=localhost;dbname=lmcm_pai_test2';
     static $username = 'pmo';
     static $password = 'pass';
 

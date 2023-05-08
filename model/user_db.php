@@ -7,9 +7,11 @@ require_once('../library/user.php');
  * Use this class to access the users table in the database.
  * 
  */
-class UserModel {
+class UserModel
+{
 
-    public static function get_user_data() {
+    public static function get_user_data()
+    {
         $conn = Database::connection();
         $query = 'SELECT *
                   FROM users';
@@ -29,21 +31,73 @@ class UserModel {
             $mobile = $user['mobile'];
             $user_type = $user['user_type'];
             $user_status = $user['user_status'];
-            $u = new User($grower_id
-                        , $first_name
-                        , $surname
-                        , $business_name
-                        , $email
-                        , $mobile
-                        , $user_type
-                        , $user_status);
+            $u = new User(
+                $grower_id,
+                $first_name,
+                $surname,
+                $business_name,
+                $email,
+                $mobile,
+                $user_type,
+                $user_status
+            );
             array_push($users_output, $u);
         }
 
         return $users_output;
     }
-    
-    public static function get_user_by_number($user_number) {
+
+    public static function get_user_data_by_access($report_id)
+    {
+        $conn = Database::connection();
+        $query = 'SELECT users.grower_id, first_name, surname, business_name, email, mobile, user_type, user_status,
+            CASE WHEN (report_id IS NOT NULL AND report_id = :report_id) THEN \'has_access\' ELSE \'no_access\'
+                END access
+                FROM
+                    users
+                LEFT JOIN reports_access ON users.grower_id = reports_access.grower_id
+                ORDER BY
+                    user_status
+                DESC
+                    ,
+                    users.grower_id';
+        $statement = $conn->prepare($query);
+        $statement->bindValue(':report_id', $report_id);
+        $statement->execute();
+        $users = $statement->fetchall();
+        $statement->closeCursor();
+
+        $output = array();
+
+        foreach ($users as $user) {
+            $grower_id = $user['grower_id'];
+            $first_name = $user['first_name'];
+            $surname = $user['surname'];
+            $business_name = $user['business_name'];
+            $email = $user['email'];
+            $mobile = $user['mobile'];
+            $user_type = $user['user_type'];
+            $user_status = $user['user_status'];
+            $user_access = $user['access'];
+            $u = new User(
+                $grower_id,
+                $first_name,
+                $surname,
+                $business_name,
+                $email,
+                $mobile,
+                $user_type,
+                $user_status
+            );
+            $output_users = array($u, $user_access);
+            array_push($output, $output_users);
+        }
+
+        return $output;
+    }
+
+    public static function get_user_by_number($user_number)
+    {
         $conn = Database::connection();
         $query = 'SELECT *
                   FROM users
@@ -54,22 +108,24 @@ class UserModel {
         $user = $statement->fetch();
         $statement->closeCursor();
 
-        if($user != false) {
-            $user = new User($user['grower_id']
-            , $user['first_name']
-            , $user['surname']
-            , $user['business_name']
-            , $user['email']
-            , $user['mobile']
-            , $user['user_type']
-            , $user['user_status']
+        if ($user != false) {
+            $user = new User(
+                $user['grower_id'],
+                $user['first_name'],
+                $user['surname'],
+                $user['business_name'],
+                $user['email'],
+                $user['mobile'],
+                $user['user_type'],
+                $user['user_status']
             );
         }
 
         return $user;
     }
 
-    public static function get_users_by_number_starts_with($user_number) {
+    public static function get_users_by_number_starts_with($user_number)
+    {
         $conn = Database::connection();
         $query = 'SELECT *
                   FROM users
@@ -94,21 +150,24 @@ class UserModel {
             $mobile = $user['mobile'];
             $user_type = $user['user_type'];
             $user_status = $user['user_status'];
-            $u = new User($grower_id
-                        , $first_name
-                        , $surname
-                        , $business_name
-                        , $email
-                        , $mobile
-                        , $user_type
-                        , $user_status);
+            $u = new User(
+                $grower_id,
+                $first_name,
+                $surname,
+                $business_name,
+                $email,
+                $mobile,
+                $user_type,
+                $user_status
+            );
             array_push($users_output, $u);
         }
 
         return $users_output;
     }
-    
-    public static function get_user_by_email($email) {
+
+    public static function get_user_by_email($email)
+    {
         $conn = Database::connection();
         $query = 'SELECT *
                   FROM users
@@ -119,22 +178,24 @@ class UserModel {
         $user = $statement->fetch();
         $statement->closeCursor();
 
-        if($user != false) {
-            $user = new User($user['grower_id']
-            , $user['first_name']
-            , $user['surname']
-            , $user['business_name']
-            , $user['email']
-            , $user['mobile']
-            , $user['user_type']
-            , $user['user_status']
+        if ($user != false) {
+            $user = new User(
+                $user['grower_id'],
+                $user['first_name'],
+                $user['surname'],
+                $user['business_name'],
+                $user['email'],
+                $user['mobile'],
+                $user['user_type'],
+                $user['user_status']
             );
         }
 
         return $user;
     }
 
-    public static function get_user_password_hash($user_number) {
+    public static function get_user_password_hash($user_number)
+    {
         $conn = Database::connection();
         $query = 'SELECT user_password
                   FROM users
@@ -148,11 +209,12 @@ class UserModel {
         return $password;
     }
 
-    public static function set_user_password($user, $new_password) {
+    public static function set_user_password($user, $new_password)
+    {
         $conn = Database::connection();
 
         $user_id = $user->getUserID();
-        
+
         $query = 'UPDATE users
                 SET user_password = :user_password
                 WHERE grower_id = :user_id';
@@ -163,7 +225,8 @@ class UserModel {
         $statement->closeCursor();
     }
 
-    public static function add_user($grower_number, $first_name, $surname, $business_name, $email, $mobile, $user_password, $user_type, $user_status) {
+    public static function add_user($grower_number, $first_name, $surname, $business_name, $email, $mobile, $user_password, $user_type, $user_status)
+    {
         $conn = Database::connection();
         $query = 'INSERT INTO users
                          (grower_id
@@ -184,10 +247,10 @@ class UserModel {
                         , :user_password
                         , :user_type
                         , :user_status)';
-    
+
         //hash password
         $user_password = password_hash($user_password, PASSWORD_DEFAULT);
-    
+
         $statement = $conn->prepare($query);
         $statement->bindValue(':grower_id', (int)$grower_number);
         $statement->bindValue(':first_name', $first_name);
@@ -203,16 +266,16 @@ class UserModel {
     }
 
     public static function update_user(
-                         $user_id_to_change
-                       , $user_id
-                       , $first_name
-                       , $surname
-                       , $business_name
-                       , $email
-                       , $phone
-                       , $user_type
-                       , $user_status
-                    ) {
+        $user_id_to_change,
+        $user_id,
+        $first_name,
+        $surname,
+        $business_name,
+        $email,
+        $phone,
+        $user_type,
+        $user_status
+    ) {
         $conn = Database::connection();
         $query = 'UPDATE users
                 SET grower_id = :user_id
@@ -236,9 +299,5 @@ class UserModel {
         $statement->bindValue(':user_id_to_change', (int)$user_id_to_change);
         $statement->execute();
         $statement->closeCursor();
-
     }
 }
-
-?>
-
