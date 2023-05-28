@@ -7,6 +7,7 @@
             echo $user->getFirstName();
         ?>
     </h2>
+    <h3>This page can be used to change your password.  All other fields cannot be edited.  Please contact the Administrator if any fields need updating.</h3>
 </header>
 
 <main>

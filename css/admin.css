@@ -180,6 +180,13 @@ tr:nth-child(even) {
     background-color: rgba(255,163,47,.7);
 }
 
+tr:nth-child(even).inactive {
+    background-color: rgba(255, 216, 169, 0.7);
+}
+tr:nth-child(odd).inactive {
+    background-color: rgba(255, 206, 146, 0.7);
+}
+
 th {
     text-align: left;
 }

@@ -103,12 +103,52 @@ class ReportModel
         return $reports_output;
     }
 
+    public static function get_reports_by_filename_contains_and_has_access($report_filename, $grower_id)
+    {
+        $conn = Database::connection();
+        $query = 'SELECT reports_data.report_id, report_filename, report_file_type, upload_date, report_size
+                  FROM reports_data, reports_access
+                  WHERE reports_access.grower_id = :grower_id
+                        AND reports_data.report_id = reports_access.report_id
+                        AND report_filename LIKE :contains';
+
+        $contains = '%' . $report_filename . '%';
+
+        $statement = $conn->prepare($query);
+        $statement->bindValue(':grower_id', $grower_id);
+        $statement->bindValue(':contains', $contains);
+        $statement->execute();
+        $reports = $statement->fetchall();
+        $statement->closeCursor();
+
+        $reports_output = array();
+
+        foreach ($reports as $report) {
+            $report_id = $report['report_id'];
+            $report_filename = $report['report_filename'];
+            $report_file_type = $report['report_file_type'];
+            $upload_date = $report['upload_date'];
+            $report_size = $report['report_size'];
+            $r = new Report(
+                $report_id,
+                $report_filename,
+                $report_file_type,
+                $upload_date,
+                $report_size
+            );
+            array_push($reports_output, $r);
+        }
+
+        return $reports_output;
+    }
+    
     public static function get_reports_by_access($grower_id)
     {
         $conn = Database::connection();
         $query = 'SELECT reports_data.report_id, report_filename, report_file_type, upload_date, report_size
                   FROM reports_data, reports_access
-                  WHERE reports_access.grower_id = :grower_id';
+                  WHERE reports_access.grower_id = :grower_id
+                        AND reports_data.report_id = reports_access.report_id';
 
         $statement = $conn->prepare($query);
         $statement->bindValue(':grower_id', $grower_id);
@@ -193,7 +233,7 @@ class ReportModel
         $statement->closeCursor();
     }
 
-    public static function add_report($report_number, $report_filename, $report_file_type, $report_data, $upload_date, $report_size)
+    public static function add_report($report_number, $report_filename, $report_file_type, $upload_date, $report_size)
     {
         $conn = Database::connection();
         $query = 'INSERT INTO reports_data
@@ -214,7 +254,9 @@ class ReportModel
         $statement->bindValue(':report_id', (int)$report_number);
         $statement->bindValue(':report_filename', $report_filename);
         $statement->bindValue(':report_file_type', $report_file_type);
-        $statement->bindValue(':report_data', $report_data);
+        // Open temp file
+        $fp = fopen($_FILES['pdf_file']['tmp_name'], 'rb');
+        $statement->bindParam(':report_data', $fp, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY);
         $statement->bindValue(':upload_date', $upload_date);
         $statement->bindValue(':report_size', $report_size);
         $statement->execute();

@@ -8,7 +8,7 @@ html {
   box-sizing: border-box;
 }
 
-.background { 
+.background {
   background: url(../image/background.png) no-repeat bottom center fixed;
   margin: 0;
 }
@@ -63,7 +63,7 @@ header img {
 }
 
 .consignment_box {
-  background: rgba(255,163,47,.7);
+  background: rgba(255, 163, 47, .7);
   border-radius: 20px;
   padding: 0.5rem;
   margin: 0.5rem;
@@ -123,13 +123,15 @@ h3 {
   width: 2rem;
   height: 2rem;
 }
+
 .button_text {
   font-size: 1rem;
 }
 
 /* Consignment Submission Button */
 
-#consignment_submit button, #logout button {
+#consignment_submit button,
+#logout button {
   font-size: 1rem;
   padding: 0.1rem;
   width: 100%;
@@ -142,7 +144,7 @@ h3 {
   width: 97%;
   float: left;
   box-sizing: border-box;
-  background: rgba(255,163,47,.7);
+  background: rgba(255, 163, 47, .7);
   border-radius: 20px;
   padding: 0.5rem;
   margin-left: 1.5%;
@@ -188,11 +190,11 @@ input[type=radio] {
 }
 
 /* review page table styling */
-table{
+table {
   margin-top: 0.8rem;
 }
 
-th{
+th {
   color: #737373;
   font-size: 0.7rem;
   margin-top: 0.2rem;
@@ -201,11 +203,11 @@ th{
   font-weight: lighter;
 }
 
-tr{
+tr {
   margin: 0.1rem 0;
 }
 
-td > input{
+td>input {
   width: 90.5%;
   height: 2rem;
   font-size: 1.5rem;
@@ -214,7 +216,7 @@ td > input{
   margin-bottom: 0.1rem;
 }
 
-td > input:focus{
+td>input:focus {
   border: none;
   outline: none;
 }
@@ -230,128 +232,134 @@ td > input:focus{
 Entry boxes, drop-downs "break" below 630px
 */
 
-@media (min-width: 630px){
- 
+@media (min-width: 630px) {
 
-.form_box {
-  max-width: 920px;
-  margin: 0 auto;
-  position: relative;
-}
 
-/* Market Location Label postion*/
-#consignment_start.consignment_box :nth-child(2) :nth-child(1) {
-  margin-left: 4%;
-}
+  .form_box {
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+  }
 
-/* top consignment box height */
-#consignment_start.consignment_box {
-  height: 3em;
-}
+  /* Market Location Label postion*/
+  #consignment_start.consignment_box :nth-child(2) :nth-child(1) {
+    margin-left: 4%;
+  }
 
-.consignment_details {
-  width: 48%;
-  float: left;
-  padding: 0.2em;
-  font-size: 1em;
-}
+  /* top consignment box height */
+  #consignment_start.consignment_box {
+    height: 3em;
+  }
 
-.input_container {
-  width: 16%;
-  /*min-width: 176px;*/
-  float: left;
-  font-size: 1em;
-  box-sizing: border-box;
-  padding: 0.1em;
-  margin-bottom: 0.5em;
-}
+  .consignment_details {
+    width: 48%;
+    float: left;
+    padding: 0.2em;
+    font-size: 1em;
+  }
 
-.input_box {
-  width: 95.5%;
-  height: 1.0em;
-  font-size: 0.8em;
-}
+  .input_container {
+    width: 16%;
+    /*min-width: 176px;*/
+    float: left;
+    font-size: 1em;
+    box-sizing: border-box;
+    padding: 0.1em;
+    margin-bottom: 0.5em;
+  }
 
-/* custom date width & font-size */
-.consignment_details .input_box {
-  width: 99%;
-  /*font-size: 1em;*/
-}
+  .input_box {
+    width: 95.5%;
+    height: 1.0em;
+    font-size: 0.8em;
+  }
 
-.drop_down {
-  height: 1.7em;
-  font-size: 0.7em;
-}
+  /* custom date width & font-size */
+  .consignment_details .input_box {
+    width: 99%;
+    /*font-size: 1em;*/
+  }
 
-/* custom market location left margin */
-.consignment_details .drop_down {
-  margin-left: 4%;
-}
+  .drop_down {
+    height: 1.7em;
+    font-size: 0.7em;
+  }
 
-.drop_down option {
-  font-size: 0.7rem;
-}
+  /* custom market location left margin */
+  .consignment_details .drop_down {
+    margin-left: 4%;
+  }
 
-/* Consignment Add/Remove Buttons */
+  .drop_down option {
+    font-size: 0.7rem;
+  }
 
-.consignment_add_remove {
-  margin: 0.1rem;
-}
+  /* Consignment Add/Remove Buttons */
 
-.consignment_button {
-  width: 20%;
-  margin-left: 20%;
-  padding: 0.25rem;
-  border-radius: 1em;
-}
+  .consignment_add_remove {
+    margin: 0.1rem;
+  }
 
-.remove_entry{
-  width: auto;
-  margin-top: 20px;
-}
+  .consignment_button {
+    width: 20%;
+    margin-left: 20%;
+    padding: 0.25rem;
+    border-radius: 1em;
+  }
 
-.consignment_button img {
-  width: auto;
-  height: 0.8rem;
-}
-.button_text {
-  font-size: 0.7rem;
-}
+  .remove_entry {
+    width: auto;
+    margin-top: 20px;
+  }
 
-/* Consignment Submission Button */
-/*
+  .consignment_button img {
+    width: auto;
+    height: 0.8rem;
+  }
+
+  .button_text {
+    font-size: 0.7rem;
+  }
+
+  /* Consignment Submission Button */
+  /*
 #consignment_submit button {
   font-size: 1em;
   border-radius: 0.25em;
 }
 */
 
-/* input field for table in review page */
+  /* input field for table in review page */
 
-td > input{
-  width: 90.5%;
-  height: 1.0em;
-  font-size: 0.8em;
-}
-/* last section including the recaptcha in review page */
-#submit{
-  display: flex;
-  justify-content: space-around;
-}
-#submit > button,.recaptcha > button{
- 
-  width: 10rem;
-  border-radius: 0.5rem;
-  border: 0;
-  padding: 1rem;
-  font-size: 0.8rem;
-}
-.recaptcha{
-  position: absolute;
-  right: -20%;
-}
-.recaptcha > button{
-  width: 8rem;
-  background-color: green;
-}
+  td>input {
+    width: 90.5%;
+    height: 1.0em;
+    font-size: 0.8em;
+  }
+
+  /* last section including the recaptcha in review page */
+  #submit {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #submit>button,
+  .recaptcha>button {
+
+    width: 10rem;
+    border-radius: 0.5rem;
+    border: 0;
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .recaptcha {
+    position: absolute;
+    right: -20%;
+  }
+
+  .recaptcha>button {
+    width: 8rem;
+    background-color: green;
+  }
 }

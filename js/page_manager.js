@@ -61,6 +61,20 @@ function editAccess() {
     $("#update_access").css("color", "white");
 }
 
+//Allow report access list to be edited on admin upload report form
+function editUploadAccess() {
+    $(".input_container :input").prop("disabled", false);
+
+    //Hide edit access and show cancel changes button
+    $("#edit_upload_access").hide();
+    $("#cancel_changes").show();
+
+    //colour cancel changes, update user buttons
+    $("#cancel_changes").css("background-color", "red");
+    $("#upload_report").css("background-color", "green");
+    $("#upload_report").css("color", "white");
+}
+
 function resetPassword() {
 
     //Hide edit user button and show cancel changes button

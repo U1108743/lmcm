@@ -4,8 +4,6 @@
     <h1>Welcome <?php echo htmlspecialchars($user->getFirstName()); ?></h1>
     <h2>Grower Management</h2>
 </header>
-<?php echo $user->getUserType() ?>
-
 
 <main>
     <div id="admin_box">
@@ -28,6 +26,15 @@
                 </button>
             </div>
             
+            <div class="admin_icon">
+                <a href="?action=grower_view_reports">
+                <img src="../image/consignment.png"></a>
+                <br>
+                <button onclick="window.location.href='?action=grower_view_reports';">
+                Reports
+                </button>
+            </div>
+
         </div>
 
         <div id="admin_logout">

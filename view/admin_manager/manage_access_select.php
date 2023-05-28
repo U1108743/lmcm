@@ -34,12 +34,12 @@
                                     <th>Access</th>
                                 </tr>
                                 <?php foreach ($users_with_access as $user) : ?>
-                                    <tr>
+                                    <tr <?php echo htmlspecialchars(($user[0]->getUserStatus()) ? 'class=active' : 'class=inactive'); ?>>
                                         <td><?php echo htmlspecialchars($user[0]->getUserID()); ?></td>
                                         <td><?php echo htmlspecialchars($user[0]->getFirstName()); ?></td>
                                         <td><?php echo htmlspecialchars($user[0]->getSurname()); ?></td>
                                         <td></td>
-                                        <td><?php echo htmlspecialchars($user[0]->getUserStatus()); ?></td>
+                                        <td ><?php echo htmlspecialchars(($user[0]->getUserStatus()) ? 'Active' : 'Inactive'); ?></td>
                                         <td>
                                             <div class="input_container">
                                                 <?php if ($user[1] == 'has_access') : ?>
