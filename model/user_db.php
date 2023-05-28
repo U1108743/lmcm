@@ -88,7 +88,7 @@ class UserModel
     {
         $conn = Database::connection();
         $query = 'SELECT users.grower_id, max(first_name), max(surname), max(business_name), max(email), max(mobile), max(user_type), max(user_status),
-            CASE WHEN (max(report_id) IS NOT NULL AND max(report_id) = '8998') THEN 'has_access' ELSE 'no_access'
+            CASE WHEN (max(report_id) IS NOT NULL AND max(report_id) = '8998') THEN \'has_access\' ELSE \'no_access\'
                 END access
                 FROM users
                 LEFT JOIN reports_access ON users.grower_id = reports_access.grower_id
