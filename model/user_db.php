@@ -87,13 +87,13 @@ class UserModel
     public static function get_user_data_by_access($report_id)
     {
         $conn = Database::connection();
-        $query = 'SELECT users.grower_id, first_name, surname, business_name, email, mobile, user_type, user_status,
-            CASE WHEN (report_id IS NOT NULL AND report_id = :report_id) THEN \'has_access\' ELSE \'no_access\'
+        $query = 'SELECT users.grower_id, max(first_name), max(surname), max(business_name), max(email), max(mobile), max(user_type), max(user_status),
+            CASE WHEN (max(report_id) IS NOT NULL AND max(report_id) = '8998') THEN 'has_access' ELSE 'no_access'
                 END access
                 FROM users
                 LEFT JOIN reports_access ON users.grower_id = reports_access.grower_id
-		        WHERE report_id IS NULL OR report_id = :report_id_2
-                ORDER BY user_status DESC, users.grower_id';
+		        GROUP BY users.grower_id
+                ORDER BY max(user_status) DESC, users.grower_id';
         $statement = $conn->prepare($query);
         $statement->bindValue(':report_id', $report_id);
         $statement->bindValue(':report_id_2', $report_id);
