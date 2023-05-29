@@ -2,19 +2,19 @@
 
 <header>
     <h1>Add User Form</h2>
-    <h2>Add New Grower or Administrator</h2>
+        <h2>Add New Grower or Administrator</h2>
 </header>
 
 <main>
     <?php
-        if (!empty($g_clash_msg)) {
-            echo "<h3>" . $g_clash_msg . "</h3>";
-        }
-        if (!empty($e_clash_msg)) {
-            echo "<h3>" . $e_clash_msg . "</h3>";
-        }
+    if (!empty($g_clash_msg)) {
+        echo "<h3>" . $g_clash_msg . "</h3>";
+    }
+    if (!empty($e_clash_msg)) {
+        echo "<h3>" . $e_clash_msg . "</h3>";
+    }
     ?>
-          
+
     <form action="admin_management_controller.php" method="POST">
         <input type="hidden" name="action" value="add_grower">
 
@@ -25,7 +25,7 @@
         <div class="input_container">
             <label for="first_name">First Name</label>
             <input type="text" name="first_name" required><br>
-        </div>       
+        </div>
         <div class="input_container">
             <label for="surname">Surname</label>
             <input type="text" name="surname" required><br>
@@ -40,8 +40,7 @@
         </div>
         <div class="input_container">
             <label for="mobile">Mobile Number</label>
-            <input type="tel" name="mobile" pattern="04[0-9]{8}" placeholder="0412345678" 
-            minlength="10" maxlength="10" required><br>
+            <input type="tel" name="mobile" pattern="04[0-9]{8}" placeholder="0412345678" minlength="10" maxlength="10" required><br>
         </div>
         <div class="input_container">
             <label class="match_password" for="user_password">Password</label>

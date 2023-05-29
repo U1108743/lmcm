@@ -9,7 +9,7 @@ html {
     padding: 0.4rem;
 }
 
-.background { 
+.background {
     background: url(../image/background.png) no-repeat bottom center fixed;
     margin: 0;
 }
@@ -39,7 +39,7 @@ header img {
 
 /*login*/
 header h3 {
-    background-color: rgba(255,163,47,.7);
+    background-color: rgba(255, 163, 47, .7);
     color: #fff;
     border-radius: 10px;
     max-width: 275px;
@@ -71,15 +71,16 @@ header p {
 
 /*login*/
 #loginWin {
-    background-color: rgba(255,163,47,.7);
+    background-color: rgba(255, 163, 47, .7);
     color: #fff;
     border-radius: 20px;
     max-width: 400px;
     margin: 20px;
     padding: 50px;
- }
- 
-label, input { 
+}
+
+label,
+input {
     display: block;
 }
 
@@ -113,7 +114,8 @@ input {
     margin-bottom: 25px;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     outline: solid 2px #939393;
     box-shadow: 0 0 3px #939393;
 }
@@ -130,9 +132,9 @@ input:focus, select:focus {
 }
 
 @media (min-width: 550px) {
-    
+
     header p {
         max-width: 500px;
     }
-    
+
 }

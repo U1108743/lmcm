@@ -18,9 +18,9 @@
 
 class Database {
     
-    static $dsn = 'sqlsrv:server = tcp:lmcm.database.windows.net,1433; Database = lmcm';
-    static $username = 'lmcmadmin';
-    static $password = 'azurepw.A';
+    static $dsn = 'mysql:host=permaustdbservermysql.mysql.database.azure.com;dbname=permmysql';
+    static $username = 'permaustdbserveradminmysql';
+    static $password = 'GD9wZMmdJRd3ZGD';
 
     public static function connection() {
         
@@ -28,8 +28,8 @@ class Database {
             $db = new PDO(
             self::$dsn,
             self::$username,
-            self::$password);
-           // array(PDO::MYSQL_ATTR_SSL_CA => '../model/CA/DigiCertGlobalRootCA.crt.pem'));
+            self::$password,
+            array(PDO::MYSQL_ATTR_SSL_CA => '../model/CA/DigiCertGlobalRootCA.crt.pem'));
             return $db;
         } catch (PDOException $e) {
             $error_message = $e->getMessage();
@@ -39,5 +39,3 @@ class Database {
     }
 
 }
-
-?>

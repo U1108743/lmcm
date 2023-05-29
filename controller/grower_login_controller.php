@@ -53,14 +53,11 @@ switch ($action) {
 
             //Navigate to admin page or grower consignment page based on usertype
             $user = $user_session->getSessionUser();
-            $usertype = $user->getUserType();
-            switch($usertype) {
-                case 'grower':
-                    header('Location: grower_consignment_controller.php');
-                    break;
-                case 'admin':
-                    header('Location: admin_management_controller.php');
-                    break;
+            if($user->getUserType() == 'admin') {
+                header('Location: admin_management_controller.php');
+            }
+            else {
+                header('Location: grower_consignment_controller.php');
             }
         } else {
             header('Location: ?authentication=failed');
@@ -90,4 +87,3 @@ switch ($action) {
         break;
 
 }
-?>

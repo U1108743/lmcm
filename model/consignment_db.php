@@ -167,5 +167,3 @@ class IDGenerator {
         return 'e-' . $entry_id;
     }
 }
-
-?>

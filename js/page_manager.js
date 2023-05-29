@@ -1,6 +1,6 @@
 
 //Event listener to check password fields match on add user form page
-$('input').blur(function() {
+$('input').blur(function () {
     var pass = $('input[name=user_password]').val();
     var repass = $('input[name=user_password_retype]').val();
     if (pass != repass) {
@@ -15,7 +15,7 @@ $('input').blur(function() {
 
 
 //Event listener to check password fields match on reset user password form page
-$('input').blur(function() {
+$('input').blur(function () {
     var pass = $('input[name=user_password]').val();
     var repass = $('input[name=user_password_retype]').val();
 
@@ -44,35 +44,6 @@ function editUser() {
     $("#cancel_changes").css("background-color", "red");
     $("#update_user").css("background-color", "green");
     $("#update_user").css("color", "white");
-}
-
-
-//Allow report access list to be edited on admin user access list form
-function editAccess() {
-    $(".input_container :input").prop("disabled", false);
-
-    //Hide edit access and show cancel changes button
-    $("#edit_access").hide();
-    $("#cancel_changes").show();
-
-    //colour cancel changes, update user buttons
-    $("#cancel_changes").css("background-color", "red");
-    $("#update_access").css("background-color", "green");
-    $("#update_access").css("color", "white");
-}
-
-//Allow report access list to be edited on admin upload report form
-function editUploadAccess() {
-    $(".input_container :input").prop("disabled", false);
-
-    //Hide edit access and show cancel changes button
-    $("#edit_upload_access").hide();
-    $("#cancel_changes").show();
-
-    //colour cancel changes, update user buttons
-    $("#cancel_changes").css("background-color", "red");
-    $("#upload_report").css("background-color", "green");
-    $("#upload_report").css("color", "white");
 }
 
 function resetPassword() {

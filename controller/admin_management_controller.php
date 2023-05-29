@@ -2,11 +2,8 @@
 require_once('../library/config.php');
 require_once('../model/database.php');
 require_once('../model/user_db.php');
-require_once('../model/report_db.php');
-require_once('../model/report_access_db.php');
 require_once('../library/session.php');
 require_once('../library/user.php');
-require_once('../library/report.php');
 
 // create session
 $user_session = new UserSession();
@@ -26,19 +23,20 @@ if ($action === NULL) {
 }
 
 // checking if session exists and redirect accordingly
-if ($user_session->hasSessionUser()) {
+if($user_session->hasSessionUser()) {
     $user = $user_session->getSessionUser();
     // checking if user is administrator
-    if (!UserSessionHandler::is_admin($user)) {
+    if(!UserSessionHandler::is_admin($user)) {
         $action = 'admin_fail';
     }
-} else {
-    if ($action != 'logout') {
+}
+else {
+    if($action != 'logout') {
         $action = 'no_session';
     }
 }
 
-switch ($action) {
+switch($action) {
 
     case 'admin_main':
 
@@ -64,19 +62,21 @@ switch ($action) {
         $email_check = UserModel::get_user_by_email($email);
 
         //check if email or grower number already exists, redirect where required
-        if ($grower_check == false) {
+        if($grower_check == false ) {
             unset($g_clash_msg);
-        } else {
+        }
+        else {
             $g_clash_msg = "Grower number " . $grower_id . " already exists, please use another number.";
         }
-
-        if ($email_check == false) {
+        
+        if($email_check == false) {
             unset($e_clash_msg);
-        } else {
+        }
+        else {
             $e_clash_msg = "Email address " . $email . " already exists, please use another email.";
         }
 
-        if (isset($g_clash_msg) || isset($e_clash_msg)) {
+        if(isset($g_clash_msg) || isset($e_clash_msg)) {
             include('../view/admin_manager/add_user_form.php');
             die();
         }
@@ -91,17 +91,15 @@ switch ($action) {
         $user_status = filter_input(INPUT_POST, 'user_status');
 
         // add user to the system via data model
-        UserModel::add_user(
-            $grower_id,
-            $first_name,
-            $surname,
-            $business_name,
-            $email,
-            $mobile,
-            $user_password,
-            $user_type,
-            $user_status
-        );
+        UserModel::add_user($grower_id
+                , $first_name
+                , $surname
+                , $business_name
+                , $email
+                , $mobile
+                , $user_password
+                , $user_type
+                , $user_status);
 
         // create user submission message and redirect
         $_SESSION['message_type'] = 'add_user';
@@ -109,79 +107,26 @@ switch ($action) {
         header('Location: ?action=user_submitted');
         break;
 
-    case 'modify_user_form':
+    case 'modify_user_form': 
 
         $users = UserModel::get_user_data();
 
         //unset admin user password fail message
-        if (isset($_SESSION['admin_fail_msg'])) {
+        if(isset($_SESSION['admin_fail_msg'])) {
             unset($_SESSION['admin_fail_msg']);
         }
 
         // redirect to modify new user form
         include('../view/admin_manager/modify_user_select.php');
         break;
-
-    case 'manage_reports_select':
-
-        $reports = ReportModel::get_reports();
-
-        //unset admin user password fail message
-        if (isset($_SESSION['admin_fail_msg'])) {
-            unset($_SESSION['admin_fail_msg']);
-        }
-
-        // redirect to manage access selection form
-        include('../view/admin_manager/manage_reports_select.php');
-        break;
-
-    case 'manage_access_select':
-
-        $report_id = filter_input(INPUT_POST, 'report_id');
-        $users_with_access = UserModel::get_user_data_by_access($report_id);
-        $report = ReportModel::get_report_by_number($report_id);
-
-        //unset admin user password fail message
-        if (isset($_SESSION['admin_fail_msg'])) {
-            unset($_SESSION['admin_fail_msg']);
-        }
-
-        // redirect to manage access selection form
-        include('../view/admin_manager/manage_access_select.php');
-
-        break;
-
-    case 'upload_report_select':
-
-        $users = UserModel::get_user_data_by_status();
-
-        //unset admin user password fail message
-        if (isset($_SESSION['admin_fail_msg'])) {
-            unset($_SESSION['admin_fail_msg']);
-        }
-
-        // redirect to manage access selection form
-        include('../view/admin_manager/upload_report_select.php');
-        break;
-
-    case 'view_report':
-        $report_id = filter_input(INPUT_POST, 'report_id');
-        $pdf = ReportModel::get_report_data($report_id);
-        header('Content-type: application/pdf');
-        header("Cache-Control: no-cache");
-        header("Pragma: no-cache");
-        header("Content-length: " . strlen($pdf[0]));
-        die($pdf[0]);
-
-        break;
-
+    
     case 'modify_user':
 
         // user id
         $user_id = filter_input(INPUT_POST, 'user_id');
 
         // if not being redirected from a failed modify user attempt then get the selected user information
-        if (isset($user_id)) {
+        if(isset($user_id)) {
             // user information
             $selected_user = UserModel::get_user_by_number($user_id);
             $_SESSION['selected_user'] = serialize($selected_user);
@@ -196,41 +141,27 @@ switch ($action) {
         $search_input = filter_input(INPUT_POST, 'search_input');
 
         $users = array();
-        if ($search_input == "") {
+        if($search_input == "") {
             $users = array();
         }
 
-        if (strlen((string)$search_input) == 4) {
+        if(strlen((string)$search_input) == 4) {
             $found_user = UserModel::get_user_by_number($search_input);
-            if ($found_user != false) {
+            if($found_user != false) {
                 array_push($users, $found_user);
             }
-        } else {
+        }
+        else {
             $users = UserModel::get_users_by_number_starts_with($search_input);
         }
         include('../view/admin_manager/modify_user_select.php');
-        break;
-
-    case 'search_report':
-        // searches report_data and returns list of reports to be presented
-
-        $search_input = filter_input(INPUT_POST, 'search_input');
-
-        $reports = array();
-        if ($search_input == "") {
-            $reports = array();
-        }
-
-        $reports = ReportModel::get_reports_by_filename_contains($search_input);
-
-        include('../view/admin_manager/manage_reports_select.php');
         break;
 
     case 'update_user':
         // update user in system
 
         $selected_user = unserialize($_SESSION['selected_user']);
-
+        
         //first pull of user form data
         $grower_id = $selected_user->getUserID();
         $first_name = filter_input(INPUT_POST, 'first_name');
@@ -246,47 +177,49 @@ switch ($action) {
         $admin_id = $user->getUserID();
         $admin_session_pw = UserModel::get_user_password_hash($admin_id);
 
-        if (password_verify($admin_entry_pw, $admin_session_pw[0])) {
+        if(password_verify($admin_entry_pw, $admin_session_pw[0])) {
             // clear the admin_fail_msg
-            if (isset($_SESSION['admin_fail_msg'])) {
+            if(isset($_SESSION['admin_fail_msg'])) {
                 unset($_SESSION['admin_fail_msg']);
             }
 
             // try adding user to the system via data model
             try {
                 UserModel::update_user(
-                    $grower_id,
-                    $grower_id,
-                    $first_name,
-                    $surname,
-                    $business_name,
-                    $email,
-                    $mobile,
-                    $user_type,
-                    $user_status
-                );
+                  $grower_id
+                , $grower_id
+                , $first_name
+                , $surname
+                , $business_name
+                , $email
+                , $mobile
+                , $user_type
+                , $user_status);
             } catch (Exception $e) {
                 // check why the update user model failed, possible userID/email duplicate entry
                 // produce error message
 
                 $grower_check = UserModel::get_user_by_number($grower_id);
                 $email_check = UserModel::get_user_by_email($email);
-                if ($grower_check == false || $grower_id == $selected_user->getUserID()) {
+                if($grower_check == false || $grower_id == $selected_user->getUserID()) {
                     unset($g_clash_msg);
-                } else {
+                }
+                else {
                     $g_clash_msg = "Cannot update because grower number " . $grower_id . " already exists, please use another number.";
                 }
-
-                if ($email_check == false) {
+                
+                if($email_check == false) {
                     unset($e_clash_msg);
-                } else if ($selected_user->getUserID() != $email_check->getUserID()) {
+                }
+                else if ($selected_user->getUserID() != $email_check->getUserID()) {
                     $e_clash_msg = "Cannot update because email address " . $email . " already exists, please use another email.";
                 }
 
-                if (isset($g_clash_msg) || isset($e_clash_msg)) {
+                if(isset($g_clash_msg) || isset($e_clash_msg)) {
                     include('../view/admin_manager/modify_user_form.php');
                     die();
-                } else {
+                }
+                else {
                     $other_error = "The following error occured when attempting to update user: " . $e;
                     include('../view/admin_manager/modify_user_form.php');
                     die();
@@ -297,6 +230,7 @@ switch ($action) {
             $_SESSION['message_type'] = 'update_user';
             $_SESSION['add_user_submission_msg'] = "<h3>" . "Updated user " . $first_name . " with grower id " . $grower_id . "</h3>";
             header('Location: ?action=user_submitted');
+
         } else {
             $_SESSION['admin_fail_msg'] = "<h3>" . "Admin authentication failed when attempting update" . "</h3>";
             header('Location: ?action=modify_user');
@@ -304,207 +238,18 @@ switch ($action) {
 
         break;
 
-
-    case 'user_access_selection':
-        // update access list in system
-
-        // Get report_id
-        $report_id = filter_input(INPUT_POST, 'report_id');
-
-        // get list of users to change access for and their new access state
-        $grower_id_list = filter_input(INPUT_POST, 'grower_id_list', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-        $grower_ids = filter_input(INPUT_POST, 'grower_ids', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-
-        //admin credentials
-        $admin_entry_pw = filter_input(INPUT_POST, 'admin_password');
-        $admin_id = $user->getUserID();
-        $admin_session_pw = UserModel::get_user_password_hash($admin_id);
-
-        if (password_verify($admin_entry_pw, $admin_session_pw[0])) {
-            // clear the admin_fail_msg
-            if (isset($_SESSION['admin_fail_msg'])) {
-                unset($_SESSION['admin_fail_msg']);
-            }
-
-            // try adding user accesses to the system via data model
-            try {
-                ReportAccessModel::update_access($report_id, $grower_ids, $grower_id_list);
-            } catch (Exception $e) {
-                // get report and users with access to display
-                $report = ReportModel::get_report_by_number($report_id);
-                $users_with_access = UserModel::get_user_data_by_access($report_id);
-
-                // produce error message
-                $error = "The following error occured when attempting to change access: " . $e;
-                include('../view/admin_manager/manage_access_select.php');
-                die();
-            }
-
-            // create report access list change message and redirect
-            $_SESSION['message_type'] = 'update_access';
-            $_SESSION['change_access_msg'] = "<h3>" . "Changed Access for Individuals</h3>";
-            header('Location: ?action=access_changed');
-        } else {
-            // password failed to verify get report and users with access to display
-            $report = ReportModel::get_report_by_number($report_id);
-            $users_with_access = UserModel::get_user_data_by_access($report_id);
-            $_SESSION['admin_fail_msg'] = "<h3>" . "Admin authentication failed when attempting update" . "</h3>";
-            include('../view/admin_manager/manage_access_select.php');
-        }
-
-        break;
-
-    case 'upload_report_selection':
-        // add new report to system
-
-        //first pull of report form data
-        $report_id = filter_input(INPUT_POST, 'report_id');
-
-        $report_check = ReportModel::get_report_by_number($report_id);
-
-        //check if report already exists, redirect where required
-        if ($report_check == false) {
-            unset($r_clash_msg);
-        } else {
-            $r_clash_msg = "Report number " . $report_id . " already exists, please use another number.";
-        }
-
-        if (isset($r_clash_msg)) {
-            // get  users to display
-            $users = UserModel::get_user_data();
-            // produce error message
-            include('../view/admin_manager/upload_report_select.php');
-            die();
-        }
-
-        // Check file data
-        try {
-
-            // Undefined | Multiple Files | $_FILES Corruption Attack
-            // If this request falls under any of them, treat it invalid.
-            if (
-                !isset($_FILES['pdf_file']['error']) ||
-                is_array($_FILES['pdf_file']['error'])
-            ) {
-                throw new RuntimeException('Invalid parameters.');
-            }
-
-            // Check $_FILES['pdf_file']['error'] value.
-            switch ($_FILES['pdf_file']['error']) {
-                case UPLOAD_ERR_OK:
-                    break;
-                case UPLOAD_ERR_NO_FILE:
-                    throw new RuntimeException('No file sent.');
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                    throw new RuntimeException('Exceeded filesize limit.');
-                default:
-                    throw new RuntimeException('Unknown errors.');
-            }
-
-            // You should also check filesize here. 
-            if ($_FILES['pdf_file']['size'] > 1000000) {
-                throw new RuntimeException('Exceeded filesize limit.');
-            }
-
-            // DO NOT TRUST $_FILES['pdf_file']['mime'] VALUE !!
-            // Check MIME Type by yourself.
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
-            if (false === $ext = array_search(
-                $finfo->file($_FILES['pdf_file']['tmp_name']),
-                array(
-                    'PDF' => 'application/pdf'
-                ),
-                true
-            )) {
-                throw new RuntimeException('Invalid file format.');
-            }
-        } catch (RuntimeException $e) {
-            // get  users to display
-            $users = UserModel::get_user_data();
-            // produce error message
-            $error = "The following error occured when attempting to upload report: " . $e;
-            include('../view/admin_manager/upload_report_select.php');
-            die();
-        }
-
-        // pull remaining report data from $_FILES
-        // Add file data to php variables
-        $report_filename = $_FILES['pdf_file']['name'];
-        $report_file_type = $ext;
-        $upload_date = filter_input(INPUT_POST, 'upload_date');
-        $report_size = $_FILES['pdf_file']['size'];
-        
-        // try adding report to the system via data model
-        try {
-            ReportModel::add_report($report_id, $report_filename, $report_file_type, $upload_date, $report_size);
-        } catch (Exception $e) {
-            // get users to display
-            $users = UserModel::get_user_data();
-
-            // produce error message
-            $upload_error = "The following error occured when attempting to upload report: " . $e;
-            include('../view/admin_manager/upload_report_select.php');
-            die();
-        }
-
-        // update access list in system
-        
-        // get list of users to change access for and their new access state
-        $grower_id_list = filter_input(INPUT_POST, 'grower_id_list', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-        $grower_ids = filter_input(INPUT_POST, 'grower_ids', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-
-        //admin credentials
-        $admin_entry_pw = filter_input(INPUT_POST, 'admin_password');
-        $admin_id = $user->getUserID();
-        $admin_session_pw = UserModel::get_user_password_hash($admin_id);
-
-        if (password_verify($admin_entry_pw, $admin_session_pw[0])) {
-            // clear the admin_fail_msg
-            if (isset($_SESSION['admin_fail_msg'])) {
-                unset($_SESSION['admin_fail_msg']);
-            }
-
-            // try adding user accesses to the system via data model
-            try {
-                ReportAccessModel::update_access($report_id, $grower_ids, $grower_id_list);
-            } catch (Exception $e) {
-                // get report and users to display
-                $report = ReportModel::get_report_by_number($report_id);
-                $users = UserModel::get_user_data();
-
-                // produce error message
-                $error = "The following error occured when attempting to upload report: " . $e;
-                include('../view/admin_manager/upload_report_select.php');
-                die();
-            }
-
-            // create report upload message and redirect
-            $_SESSION['message_type'] = 'uploaded_report';
-            $_SESSION['uploaded_report_msg'] = "<h3>" . "New report " . $report_filename . " with report id " . $report_id . " uploaded (" . $upload_date . ")" . "</h3>";
-            header('Location: ?action=uploaded_report');
-        } else {
-            // password failed to verify get report and users to display
-            $report = ReportModel::get_report_by_number($report_id);
-            $users = UserModel::get_user_data();
-            $_SESSION['admin_fail_msg'] = "<h3>" . "Admin authentication failed when attempting update" . "</h3>";
-            include('../view/admin_manager/upload_report_select.php');
-        }
-
-        break;
-
     case 'user_pw_form':
 
         $user_id = filter_input(INPUT_POST, 'user_id');
-
+        
         // if not being redirected from a failed reset password attempt then get the selected user information
-        if (isset($user_id)) {
+        if(isset($user_id)) {
             // user information
             $selected_user = UserModel::get_user_by_number($user_id);
             $_SESSION['selected_user'] = serialize($selected_user);
         }
 
-        include('../view/admin_manager/reset_user_pw_form.php');
+        include('../view/admin_manager/reset_user_pw_form.php');   
         break;
 
     case 'reset_user_pw':
@@ -513,9 +258,9 @@ switch ($action) {
         $admin_id = $user->getUserID();
         $admin_session_pw = UserModel::get_user_password_hash($admin_id);
 
-        if (password_verify($admin_entry_pw, $admin_session_pw[0])) {
+        if(password_verify($admin_entry_pw, $admin_session_pw[0])) {
             // clear the admin_fail_msg
-            if (isset($_SESSION['admin_fail_msg'])) {
+            if(isset($_SESSION['admin_fail_msg'])) {
                 unset($_SESSION['admin_fail_msg']);
             }
 
@@ -529,7 +274,8 @@ switch ($action) {
             // set new password in database
             try {
                 UserModel::set_user_password($selected_user, $new_pw_hash);
-            } catch (Exception $e) {
+            }
+            catch (Exception $e) {
                 $_SESSION['admin_fail_msg'] = "<h3>" . "There was a database error and password could not be reset" . "</h3>";
                 header('Location: ?action=user_pw_form');
             }
@@ -538,6 +284,7 @@ switch ($action) {
             $_SESSION['message_type'] = 'reset_user_pw';
             $_SESSION['add_user_submission_msg'] = "<h3>" . "Password reset for user " . $selected_user->getFirstName() . " with user id " . $selected_user->getUserID() . "</h3>";
             header('Location: ?action=user_submitted');
+
         } else {
             $_SESSION['admin_fail_msg'] = "<h3>" . "Admin authentication failed for password reset" . "</h3>";
             header('Location: ?action=user_pw_form');
@@ -549,22 +296,6 @@ switch ($action) {
 
         // redirected user submission so that user refresh does not resubmit add user form
         include('../view/admin_manager/admin_message.php');
-        break;
-
-    case 'access_changed':
-
-        // redirected reports access list so that user refresh does not resubmit change access form
-        // Supply reports for page
-        $reports = ReportModel::get_reports();
-        include('../view/admin_manager/manage_reports_select.php');
-        break;
-
-    case 'uploaded_report':
-
-        // redirected report upload so that user refresh does not resubmit upload form
-        // Supply reports for page
-        $reports = ReportModel::get_reports();
-        include('../view/admin_manager/manage_reports_select.php');
         break;
 
     case 'no_session':
@@ -585,4 +316,5 @@ switch ($action) {
         $user_session->closeSession();
         header('Location: grower_login_controller.php');
         break;
+
 }
