@@ -10,19 +10,28 @@
         <div class="icon_box">
             <div class="admin_icon">
                 <a href="?action=grower_account">
-                    <img src="../image/growerAccount.png"></a>
+                <img src="../image/growerAccount.png"></a>
                 <br>
                 <button onclick="window.location.href='?action=grower_account';">
-                    Account
+                Account
                 </button>
             </div>
 
             <div class="admin_icon">
                 <a href="?action=goto_grower_consignment">
-                    <img src="../image/consignment.png"></a>
+                <img src="../image/consignment.png"></a>
                 <br>
                 <button onclick="window.location.href='?action=goto_grower_consignment';">
-                    Consignment
+                Consignment
+                </button>
+            </div>
+            
+            <div class="admin_icon">
+                <a href="?action=grower_view_reports">
+                <img src="../image/consignment.png"></a>
+                <br>
+                <button onclick="window.location.href='?action=grower_view_reports';">
+                Reports
                 </button>
             </div>
 
@@ -33,7 +42,7 @@
                 Logout
             </button>
         </div>
-        <div>
+    <div>
 
 </main>
 

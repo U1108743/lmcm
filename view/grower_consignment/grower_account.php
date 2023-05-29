@@ -1,16 +1,17 @@
 <?php include '../view/admin_manager/header_admin.php' ?>
 <header>
     <h1>Grower Account</h2>
-        <h2>
-            Account information for
-            <?php
+    <h2>
+        Account information for
+        <?php 
             echo $user->getFirstName();
-            ?>
-        </h2>
+        ?>
+    </h2>
+    <h3>This page can be used to change your password.  All other fields cannot be edited.  Please contact the Administrator if any fields need updating.</h3>
 </header>
 
 <main>
-
+          
     <form action="grower_consignment_controller.php" method="POST">
         <input type="hidden" name="action" value="update_user">
 
@@ -21,7 +22,7 @@
         <div class="input_container">
             <label for="first_name">First Name</label>
             <input type="text" name="first_name" value="<?php echo htmlspecialchars($user->getFirstName()); ?>" required disabled><br>
-        </div>
+        </div>       
         <div class="input_container">
             <label for="surname">Surname</label>
             <input type="text" name="surname" value="<?php echo htmlspecialchars($user->getSurname()); ?>" required disabled><br>
@@ -36,7 +37,8 @@
         </div>
         <div class="input_container">
             <label for="mobile">Mobile Number</label>
-            <input type="tel" name="mobile" pattern="04[0-9]{8}" placeholder="0412345678" minlength="10" maxlength="10" value="<?php echo htmlspecialchars($user->getPhoneNo()); ?>" required disabled><br>
+            <input type="tel" name="mobile" pattern="04[0-9]{8}" placeholder="0412345678" 
+            minlength="10" maxlength="10" value="<?php echo htmlspecialchars($user->getPhoneNo()); ?>" required disabled><br>
         </div>
         <button type="button" onclick="window.location.href='grower_consignment_controller.php?action=change_password_form';">
             Change Password

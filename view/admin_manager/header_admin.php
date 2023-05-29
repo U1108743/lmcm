@@ -2,7 +2,6 @@
 <html>
 
 <!-- the header_admin head section -->
-
 <head>
     <title>Persimmons Weekly Report</title>
     <meta charset="UTF-8">

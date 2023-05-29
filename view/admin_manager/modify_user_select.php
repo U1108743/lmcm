@@ -1,7 +1,7 @@
 <?php include '../view/admin_manager/header_admin.php' ?>
 <header class="modUser">
     <h1>Modify User List</h2>
-        <h2>Modify Grower or Administrator</h2>
+    <h2>Modify Grower or Administrator</h2>
 </header>
 
 <main>
@@ -18,7 +18,7 @@
     <section>
         <div class="container_box">
             <div class="result_box">
-                <h2>Results</h2>
+            <h2>Results</h2>
                 <?php if ($users) : ?>
                     <table class='result_table'>
                         <tbody>
@@ -53,7 +53,7 @@
                                             </button>
                                         </form>
                                     </td>
-
+                                
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-
+        
     </section>
 
 </main>

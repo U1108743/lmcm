@@ -2,22 +2,22 @@
 <header>
 
     <h1>Change Password Form</h2>
-        <h2>
-            Changing password for Grower
-            <?php
+    <h2>
+        Changing password for Grower 
+        <?php 
             echo $user->getUserID()
-            ?>
-        </h2>
-        <?php
+        ?>
+    </h2>
+    <?php
         if (isset($_SESSION['grower_fail_msg'])) {
             echo $_SESSION['grower_fail_msg'];
         }
-        ?>
+    ?>
 </header>
 
 <main>
 
-
+          
     <form action="grower_consignment_controller.php" method="POST">
         <input type="hidden" name="action" value="change_password">
 
@@ -33,8 +33,8 @@
         <div class="input_container">
             <label for="admin_password">Current Password</label>
             <input type="password" placeholder="Enter current password" name="current_password" value="" onkeypress="return event.charCode != 32" required><br>
-        </div>
-
+        </div>         
+        
         <button id="reset_password" type="button" onclick="resetPassword();" disabled>Change Password</button>
         <button id="cancel_changes" type="button" onclick="window.location.reload();" hidden>Cancel Password Change</button>
         <button id="confirm_reset" type="submit" hidden>Confirm Password Change</button>

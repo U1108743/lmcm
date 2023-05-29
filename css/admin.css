@@ -13,7 +13,7 @@ html {
     padding: 0.4rem;
 }
 
-.background {
+.background { 
     background: url(../image/background.png) no-repeat bottom center fixed;
     margin: 0;
 }
@@ -33,8 +33,7 @@ header img {
     text-align: center;
 }
 
-main img,
-.admin_icon button {
+main img, .admin_icon button {
     width: 80%;
     max-width: 200px;
     height: auto;
@@ -61,13 +60,13 @@ h3 {
     color: red;
     font-size: 0.7em;
     max-width: 400px;
-    margin: auto;
+    margin:auto;
     margin-bottom: 0.2em;
     text-align: center;
 }
 
 #head h3 {
-    color: #737373;
+    color:#737373;
 }
 
 label {
@@ -87,8 +86,7 @@ input {
     margin-top: 0.2rem;
 }
 
-input,
-select {
+input, select {
     padding: 0.1rem;
     /*font-size: 1.5rem;*/
     font-size: 0.6rem;
@@ -101,7 +99,7 @@ select {
 }
 
 form {
-    background-color: rgba(255, 163, 47, .7);
+    background-color: rgba(255,163,47,.7);
     color: #fff;
     border-radius: 20px;
     height: 100%;
@@ -146,7 +144,7 @@ button:hover {
 }
 
 .admin_icon {
-    background-color: rgba(255, 163, 47, .7);
+    background-color: rgba(255,163,47,.7);
     height: auto;
     border-radius: 20px;
     padding: 1rem;
@@ -160,14 +158,12 @@ button:hover {
     opacity: 0.8;
 }
 
-.result_box,
-.searchForm {
-    background: rgba(255, 163, 47, .7);
+.result_box, .searchForm {
+    background: rgba(255,163,47,.7);
     border-radius: 20px;
     padding: 0.5rem;
     margin: 5px auto;
 }
-
 .result_box h2 {
     font-size: 0.8rem;
     text-align: center;
@@ -181,7 +177,14 @@ button:hover {
 }
 
 tr:nth-child(even) {
-    background-color: rgba(255, 163, 47, .7);
+    background-color: rgba(255,163,47,.7);
+}
+
+tr:nth-child(even).inactive {
+    background-color: rgba(255, 216, 169, 0.7);
+}
+tr:nth-child(odd).inactive {
+    background-color: rgba(255, 206, 146, 0.7);
 }
 
 th {
@@ -192,8 +195,7 @@ th {
     display: none;
 }
 
-td,
-th {
+td, th {
     /*border: 1px solid #666;*/
     padding: 0.1rem;
 }
@@ -219,10 +221,7 @@ th {
     border-radius: 0em;
 }
 
-th,
-td,
-.searchForm button,
-.modUser button {
+th, td, .searchForm button, .modUser button {
     font-size: 0.6rem;
 }
 
@@ -243,7 +242,7 @@ td,
         font-size: 1.5em;
         margin-bottom: 0.3em;
     }
-
+    
     .modUser h2 {
         font-size: 1em;
         margin-bottom: 0.2em;
@@ -256,15 +255,15 @@ td,
     th {
         font-size: 0.9rem;
     }
-
+    
     td {
         font-size: 0.8rem;
     }
-
+    
     .select_button {
         padding: 0.2rem;
     }
-
+    
     .select_button button {
         font-size: 0.8rem;
     }
@@ -273,28 +272,25 @@ td,
         display: none;
     }
 
-    .searchForm button,
-    .modUser button {
+    .searchForm button, .modUser button {
         font-size: 1rem;
     }
 
 }
 
 @media (min-width: 630px) {
-
+    
     h1 {
         font-size: 1.5em;
         margin-bottom: 0.3em;
     }
-
+    
     h2 {
         font-size: 1em;
         margin-bottom: 0.2em;
     }
 
-    .searchForm,
-    .result_box,
-    .result_table {
+    .searchForm , .result_box, .result_table {
         max-width: 920px;
     }
 
@@ -306,7 +302,7 @@ td,
     h3 {
         font-size: 0.8em;
         max-width: 555px;
-        margin: auto;
+        margin:auto;
         margin-bottom: 0.2em;
         text-align: center;
     }
@@ -318,7 +314,7 @@ td,
     button {
         font-size: 1rem;
     }
-
+    
     .select_button button {
         padding: 0.2rem;
     }
@@ -337,16 +333,15 @@ td,
         margin-bottom: 0.5em;
     }
 
-    input,
-    select {
+    input, select {
         width: 100%;
         /*height: 1.2rem;*/
         font-size: 1em;
     }
-
+    
     #match_msg {
         color: red;
         font-size: 0.6rem;
         margin-top: 0.5rem;
-    }
+    } 
 }
